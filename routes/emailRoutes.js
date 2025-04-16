@@ -4,18 +4,17 @@ const sendEmail = require("../config/mailer");
 const router = express.Router();
 
 router.post("/send-email", async (req, res) => {
-    const { name, email, subject, message } = req.body;
+    const { name, email, message } = req.body;
 
-    if (!name || !email || !subject || !message) {
+    if (!name || !email || !message) {
         return res.status(400).json({ success: false, message: "All fields are required" });
     }
 
     const emailOptions = {
         to: process.env.EMAIL,
-        subject: `${subject} - Message from ${name}`,
-        text: `From: ${name} - <${email}>\n\n${message}`,
-        html: `<p><strong>From:</strong> ${name} (${email})</p>
-                <p><strong>Subject:</strong> ${subject}</p>
+        subject: `Portfolio Message - ${name}`,
+        text: `Info : <${email}> - ${name}\n${message}`,
+        html: `<p><strong>Info:</strong> ${email} - ${name}</p>
                 <p>${message}</p>`,
     };
 
